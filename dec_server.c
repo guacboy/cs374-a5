@@ -28,7 +28,7 @@ void error(const char *msg) {
 // set up the address struct for the server socket (binds to localhost)
 void setupAddressStruct(struct sockaddr_in* address, int portNumber) {
     // clear out the address struct
-    memset((char*) address, "\0", sizeof(*address));
+    memset((char*) address, '\0', sizeof(*address));
 
     // the address should be network capable
     address->sin_family = AF_INET;
@@ -41,8 +41,8 @@ void setupAddressStruct(struct sockaddr_in* address, int portNumber) {
 
 // convert a character to its numeric value (0-26)
 int charToValue(char ch) {
-    if (ch == " ") return 26;
-    if (ch >= "A" && ch <= "Z") return ch - "A";
+    if (ch == ' ') return 26;
+    if (ch >= 'A' && ch <= 'Z') return ch - 'A';
 
     return -1; // invalid
 }
@@ -50,13 +50,13 @@ int charToValue(char ch) {
 
 // convert a numeric value (0-26) back to a character
 char valueToChar(int val) {
-    if (val == 26) return " ";
+    if (val == 26) return ' ';
 
-    return "A" + val;
+    return 'A' + val;
 }
 
 
-// read exactly "len" bytes from a socket, retrying if necessary
+// read exactly 'len' bytes from a socket, retrying if necessary
 int receiveAll(int socketFD, char *buffer, int len) {
     int totalRead = 0;
     int bytesRead;
@@ -69,8 +69,7 @@ int receiveAll(int socketFD, char *buffer, int len) {
     return totalRead;
 }
 
-
-// send exactly "len" bytes over a socket, retrying if necessary
+// send exactly 'len' bytes over a socket, retrying if necessary
 int sendAll(int socketFD, const char *buffer, int len) {
     int totalSent = 0;
     int bytesSent;
@@ -84,7 +83,7 @@ int sendAll(int socketFD, const char *buffer, int len) {
 }
 
 
-// this function handles a single client connection (runs in a child process)
+// handles a single client connection (runs in a child process)
 void handleClient(int connectionSocket) {
     char ciphertext[MAX_BUFFER];
     char key[MAX_BUFFER];
@@ -98,7 +97,7 @@ void handleClient(int connectionSocket) {
         close(connectionSocket);
         exit(1);
     }
-    ciphertext[numBytes] = "\0";
+    ciphertext[numBytes] = '\0';
     if (strcmp(ciphertext, HANDSHAKE) != 0) {
         // wrong kind of client, send error and close
         const char *errorMsg = "ERROR: Not dec_client";
@@ -127,7 +126,7 @@ void handleClient(int connectionSocket) {
         close(connectionSocket);
         exit(1);
     }
-    ciphertext[ciphertextLength] = "\0";
+    ciphertext[ciphertextLength] = '\0';
 
     // 3. receive the length of the key and then the key itself
     int keyLength;
@@ -147,7 +146,7 @@ void handleClient(int connectionSocket) {
         close(connectionSocket);
         exit(1);
     }
-    key[keyLength] = "\0";
+    key[keyLength] = '\0';
 
     // 4. verify that the key is at least as long as the ciphertext
     if (keyLength < ciphertextLength) {

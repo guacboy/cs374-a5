@@ -27,7 +27,7 @@ void errorWithCode(const char *msg, int code) {
 // set up the address struct for the server socket
 void setupAddressStruct(struct sockaddr_in* address, int portNumber, char* hostname) {
     // clear out the address struct
-    memset((char*) address, "\0", sizeof(*address));
+    memset((char*) address, '\0', sizeof(*address));
 
     // the address should be network capable
     address->sin_family = AF_INET;
@@ -47,13 +47,13 @@ void setupAddressStruct(struct sockaddr_in* address, int portNumber, char* hostn
 
 // convert a character to its numeric value (0-26)
 int charToValue(char ch) {
-    if (ch == " ") return 26;
-    if (ch >= "A" && ch <= "Z") return ch - "A";
+    if (ch == ' ') return 26;
+    if (ch >= 'A' && ch <= 'Z') return ch - 'A';
+
     return -1;
 }
 
-
-// read exactly "len" bytes from a socket
+// read exactly 'len' bytes from a socket
 int receiveAll(int socketFD, char *buffer, int len) {
     int totalRead = 0;
     int bytesRead;
@@ -67,7 +67,7 @@ int receiveAll(int socketFD, char *buffer, int len) {
 }
 
 
-// send exactly "len" bytes over a socket
+// send exactly 'len' bytes over a socket
 int sendAll(int socketFD, const char *buffer, int len) {
     int totalSent = 0;
     int bytesSent;
@@ -106,11 +106,11 @@ char* readFile(const char *filename, int *outLength, int shouldValidate) {
     }
 
     // remove trailing newline if it exists
-    if (fileSize > 0 && content[fileSize - 1] == "\n") {
-        content[fileSize - 1] = "\0";
+    if (fileSize > 0 && content[fileSize - 1] == '\n') {
+        content[fileSize - 1] = '\0';
         *outLength = fileSize - 1;
     } else {
-        content[fileSize] = "\0";
+        content[fileSize] = '\0';
         *outLength = fileSize;
     }
 
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
 
     // ensure the key is at least as long as the plaintext
     if (keyLength < plaintextLength) {
-        fprintf(stderr, "Error: key "%s" is too short\n", keyFile);
+        fprintf(stderr, "Error: key '%s' is too short\n", keyFile);
         free(plaintext);
         free(key);
         exit(1);
@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
         free(key);
         exit(2);
     }
-    buffer[charsRead] = "\0";
+    buffer[charsRead] = '\0';
     if (strcmp(buffer, ACK) != 0) {
         fprintf(stderr, "Error: connected to wrong server (got %s)\n", buffer);
         close(socketFD);
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
         free(key);
         exit(1);
     }
-    ciphertext[ciphertextLength] = "\0";
+    ciphertext[ciphertextLength] = '\0';
 
     // output the ciphertext with a trailing newline
     printf("%s\n", ciphertext);

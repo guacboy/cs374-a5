@@ -26,9 +26,9 @@ int main(int argc, char *argv[]) {
     // define the set of allowed characters: A-Z and space
     char allowedChars[27];
     for (int i = 0; i < 26; i++) {
-        allowedChars[i] = "A" + i;
+        allowedChars[i] = 'A' + i;
     }
-    allowedChars[26] = " ";
+    allowedChars[26] = ' ';
 
     // generate and output each random character
     for (int i = 0; i < keyLength; i++) {
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         putchar(allowedChars[randomIndex]);
     }
     // add a newline at the end
-    putchar("\n");
+    putchar('\n');
 
     return 0;
 }
